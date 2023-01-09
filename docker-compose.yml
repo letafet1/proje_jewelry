@@ -15,7 +15,7 @@ services:
       - ./nginx/proxy.conf/:/etc/nginx/proxy.conf
 
   postgres:
-    container_name:  postgres-db-bread_db
+    container_name:  postgres-db-jewelry_db
     image:           postgres:9.6.6
     ports:
       - 5432:5432
