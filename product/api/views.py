@@ -13,9 +13,7 @@ class CategoryProductView(APIView):
         data=[]
         for cata in category_serializer:
             prod_obj=Product.objects.filter(category=cata['id'])
-            prod_img=ProductImage.objects.filter(product__category=cata['id'])
-
-            cata['products']=ProdsSerializer(prod_obj,many=True).data+ProductImageSerializer(prod_img,many=True).data
+            cata['products']=ProdsSerializer(prod_obj,many=True).data
             data.append(cata)
 
         return Response(data)
@@ -31,7 +29,7 @@ class CategoryTheListView(generics.ListAPIView):
         queryset=Product.objects.all()
         category=request.GET.get("category",None)
         if category:
-            queryset=request.filter(prods__category__id=int(category))
+            queryset=request.filter(product__category__id=int(category))
         return queryset
 
 class ProdsTheListView(generics.ListAPIView):

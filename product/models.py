@@ -36,6 +36,8 @@ class Product (models.Model):
     material=models.TextField(null=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True, related_name="post_category", related_query_name="pcategory")
     created_date = models.DateTimeField(verbose_name="Created Date", auto_now_add=True)
+    image_1 = models.ImageField(upload_to="product_images",null=True)
+    image_2 = models.ImageField(upload_to="product_images",null=True)
 
     def __str__(self):
         return self.name
@@ -46,13 +48,4 @@ class Product (models.Model):
         ordering=["-id"]
 
 
-class ProductImage(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="Images")
-    image = models.ImageField(upload_to="product_images")
 
-    def __str__(self):
-        return self.product.name
-
-    class Meta:
-        verbose_name = "Product Image"
-        verbose_name_plural = "Product Images"
