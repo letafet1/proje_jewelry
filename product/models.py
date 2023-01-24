@@ -2,6 +2,7 @@ from django.db import models
 from  django.contrib.auth import get_user_model
 from product.helper import seo
 from django.urls import reverse
+from  .utils import create_slug_shortcode
 
 User=get_user_model()
 
@@ -20,12 +21,10 @@ class Category(models.Model):
         verbose_name_plural="Categories"
 
     def save(self, *args, **kwargs):
-        super(Category, self).save(*args, **kwargs)
-        self.slug = seo(self.title)
-        super(Category, self).save(*args, **kwargs)
+        if not self.slug:
+            self.slug = create_slug_shortcode(size=12, model_=Category)
 
-    def get_absolute_url(self):
-        return reverse('product:category_detail', kwargs={'slug': self.slug})
+        super(Category, self).save(*args, **kwargs)
 
 class Product (models.Model):
 
@@ -34,6 +33,7 @@ class Product (models.Model):
     price=models.FloatField(null=True)
     discount_price = models.FloatField(default=0)
     material=models.TextField(null=True)
+    size=models.IntegerField(null=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True, related_name="post_category", related_query_name="pcategory")
     created_date = models.DateTimeField(verbose_name="Created Date", auto_now_add=True)
     image_1 = models.ImageField(upload_to="product_images",null=True)

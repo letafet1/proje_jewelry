@@ -1,9 +1,12 @@
+import django_filters.rest_framework
 from rest_framework.decorators import  api_view
 from rest_framework import generics
 from rest_framework.response import Response
 from .serializers import *
 from product.models import *
+from .filter import ProductFilter
 from rest_framework.views import  APIView
+from django_filters.rest_framework import DjangoFilterBackend
 
 
 class CategoryProductView(APIView):
@@ -19,6 +22,19 @@ class CategoryProductView(APIView):
         return Response(data)
 
 
+
+class ProductListView(generics.ListAPIView):
+    serializer_class = ProdsCatSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = ProductFilter
+
+    def get_queryset(self, *args, **kwargs):
+        request = self.request
+        queryset = Product.objects.all()
+        category=request.GET.get("category")
+        search=request.GET.get("search")
+
+        return queryset
 
 class CategoryTheListView(generics.ListAPIView):
     queryset = Category.objects.all()
@@ -49,3 +65,5 @@ def prods_list_view(request):
         prods = Product.objects.all()
         serializer = ProdsSerializer(prods, many=True)
         return Response(serializer.data)
+
+

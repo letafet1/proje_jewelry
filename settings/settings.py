@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'product',
     'rest_framework',
+    'django_filters',
+    'accounts',
 ]
 
 MIDDLEWARE = [
@@ -52,6 +54,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'settings.urls'
+
+AUTH_USER_MODEL = 'accounts.MyUser'
 
 TEMPLATES = [
     {

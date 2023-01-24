@@ -14,7 +14,7 @@ class ProdsCatSerializer(serializers.ModelSerializer):
     category=CategorySerializer()
     class Meta:
         model=Product
-        fields=["id","name","price","category","description","created_date","material","discount_price","discount_price","image_1","image_2"]
+        fields=["id","name","price","category","description","created_date","material","discount_price","discount_price","image_1","image_2","size"]
 
 
 #class ProductImageSerializer(serializers.ModelSerializer):
@@ -33,5 +33,5 @@ class ProdsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model=Product
-        fields=["id","name","price","category","description","created_date","material","discount_price","image_1","image_2"]
+        fields=["id","name","price","category","description","created_date","material","discount_price","image_1","image_2","size"]
 
